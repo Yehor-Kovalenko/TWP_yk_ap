@@ -1,22 +1,27 @@
 ﻿using System;
+using Logic.Data;
 
 /// <summary>
 /// Summary description for Class1
 /// </summary>
-public abstract class LogicAPI
+
+namespace Logic
 {
-    public abstract Ball createBall();
+    public abstract class LogicAPI
+    {
+        public abstract Ball createBall(int posX, int posY, int speedX, int speedY, int radius);
 
-    public abstract void removeBall();
+        public abstract void removeBall(Ball ball);
 
-    public abstract void removeAllBalls();
+        public abstract void removeAllBalls();
 
-    public abstract void stopBall();
+        public abstract void stopBall(Ball ball);
 
-    public abstract void stopAllBalls();
+        public abstract void stopAllBalls();
 
-    public abstract Ball createBallAtRandomPlace();
+        public abstract Ball createBallAtRandomPosition();
 
-    public abstract void startAllBalls();
+        public abstract void startAllBalls();
+    }
 }
  
