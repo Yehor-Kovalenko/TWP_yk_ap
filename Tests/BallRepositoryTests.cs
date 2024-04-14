@@ -1,26 +1,24 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Logic;
-using Logic.Data;
+using Data;
 
 namespace Tests
 {
     public class BallRepositoryTests
     {
-
-        //DataApi repo = DataApi.instantiate();
+        DataApi repo = DataApi.instantiate();
 
         public void TestAddBall()
         {
             Ball testBall = new Ball(15, 15, 15, 15, 5);
-            DataApi repo = DataApi.instantiate();
             repo.addBall(testBall);
             Assert.AreEqual(repo.Balls.Count, 1);
-            Assert.AreEqual(repo.Balls[0].posX, 15);
-            Assert.AreEqual(repo.Balls[0].posY, 15);
-            Assert.AreEqual(repo.Balls[0].speedX, 15);
-            Assert.AreEqual(repo.Balls[0].speedY, 15);
-            Assert.AreEqual(repo.Balls[0].radius, 5);
+            Assert.AreEqual(repo.Balls[0].PosX, 15);
+            Assert.AreEqual(repo.Balls[0].PosY, 15);
+            Assert.AreEqual(repo.Balls[0].SpeedX, 15);
+            Assert.AreEqual(repo.Balls[0].SpeedY, 15);
+            Assert.AreEqual(repo.Balls[0].Radius, 5);
         }
     }
 }

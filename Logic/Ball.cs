@@ -1,8 +1,6 @@
 ﻿using System;
-
-/// <summary>
-/// Summary description for Class1
-/// </summary>
+using Timer = System.Timers.Timer;
+using System.Numerics;
 
 namespace Logic
 {
@@ -14,6 +12,7 @@ namespace Logic
         int speedX;
         int speedY;
         int radius;
+        private Timer ballTimer;
 
         public int PosX
         {
@@ -45,6 +44,12 @@ namespace Logic
             set { radius = value; }
         }
 
+        public Timer BallTimer
+        {
+            get => ballTimer;
+            set { ballTimer = value; }
+        }
+
 
         public Ball(int pos_X, int pos_Y, int speed_X, int speed_Y, int rad)
         {
@@ -55,13 +60,13 @@ namespace Logic
             radius = rad;
         }
 
-        public void move(int bWidth, int bHeight)
+        public void move(Vector2 boardSize)
         {
-            if (posX + speedX >= bWidth - radius || posX + speedX <= radius)
+            if (posX + speedX >= boardSize[0] - radius || posX + speedX <= radius)
             {
                 changeXdirection();
             }
-            if (posY + speedY >= bHeight - radius || posY + speedY <= radius)
+            if (posY + speedY >= boardSize[1] - radius || posY + speedY <= radius)
             {
                 changeYdirection();
             }
@@ -77,6 +82,14 @@ namespace Logic
         void changeYdirection()
         {
             speedY *= -1;
+        }
+
+        public void startMovement(int bWidth, int bHeight)
+        {
+            Vector2 bSize = new Vector2(bWidth, bHeight);
+            BallTimer = new Timer(16.0);
+            BallTimer.Enabled = true;
+            BallTimer.AutoReset = true;
         }
 
     }
