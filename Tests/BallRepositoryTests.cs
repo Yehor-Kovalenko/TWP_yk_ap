@@ -5,10 +5,12 @@ using Data;
 
 namespace Tests
 {
+    [TestClass]
     public class BallRepositoryTests
     {
         DataApi repo = DataApi.instantiate();
 
+        [TestMethod]
         public void TestAddBall()
         {
             Ball testBall = new Ball(15, 15, 15, 15, 5);

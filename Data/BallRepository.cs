@@ -12,7 +12,7 @@ namespace Data
         { 
         }
 
-        public override List<Ball>? Balls
+        public override List<Ball> Balls
         {
             get => balls;
         }
