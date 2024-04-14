@@ -2,7 +2,7 @@
 using Timer = System.Timers.Timer;
 using System.Numerics;
 
-namespace Logic
+namespace Data
 {
     public class Ball
     {

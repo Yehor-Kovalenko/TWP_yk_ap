@@ -1,9 +1,6 @@
 ﻿using System;
-using Logic.Data;
+using Data;
 
-/// <summary>
-/// Summary description for Class1
-/// </summary>
 
 namespace Logic
 {
