@@ -31,5 +31,10 @@ namespace Logic.Data
         {
             balls.Clear();
         }
+
+        public override List<Ball> getAllBalls()
+        {
+            return balls;
+        }
     }
 }

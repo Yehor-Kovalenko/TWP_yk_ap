@@ -32,6 +32,11 @@ namespace Data
             balls.Clear();
         }
 
+        public override List<Ball> getAllBalls()
+        {
+            return balls;
+        }
+
         static void Main() { }
     }
 }

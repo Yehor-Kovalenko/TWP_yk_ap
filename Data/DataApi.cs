@@ -18,5 +18,7 @@ namespace Data
         public abstract void removeBall(Ball ball);
 
         public abstract void removeAllBalls();
+
+        public abstract List<Ball> getAllBalls();
     }
 }
