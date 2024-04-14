@@ -1,10 +1,14 @@
 ﻿using System;
+using Logic;
+using System.Collections.Generic;
 
 namespace Logic.Data
 {
     public abstract class DataApi
     {
-        public static DataApi instantiate()
+        public abstract List<Ball>? Balls { get; }
+
+        public static BallRepository instantiate()
         {
             return new BallRepository();
         }

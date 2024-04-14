@@ -1,16 +1,18 @@
 ﻿using System;
-
-/// <summary>
-/// Summary description for Class1
-/// </summary>
+using Logic;
+using System.Collections.Generic;
 
 namespace Logic.Data
 {
-    internal class BallRepository : DataApi
+    public class BallRepository : DataApi
     {
-        readonly List<Ball> balls = new();
+        private List<Ball> balls = new List<Ball>();
 
-        public List<Ball> Balls
+        public BallRepository() 
+        { 
+        }
+
+        public override List<Ball>? Balls
         {
             get => balls;
         }

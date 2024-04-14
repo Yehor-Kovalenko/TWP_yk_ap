@@ -9,8 +9,8 @@ namespace Logic
     public class BallController : LogicAPI
     {
 
-        readonly int boardWidth = 14;
-        readonly int boardHeight = 14;
+        readonly int boardWidth = 140;
+        readonly int boardHeight = 140;
 
         public int BoardWidth
         {
