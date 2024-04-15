@@ -17,7 +17,7 @@ namespace Logic
             return new BallController(bHeight, bWidth);
         }
 
-        public abstract Ball createBall(int posX, int posY, int speedX, int speedY, int radius);
+        public abstract void createBall(int posX, int posY, int speedX, int speedY, int radius);
 
         public abstract void removeBall(Ball ball);
 
@@ -25,7 +25,7 @@ namespace Logic
 
         public abstract void stopAllBalls();
 
-        public abstract Ball createBallAtRandomPosition();
+        public abstract void createBallAtRandomPosition();
 
         public abstract void startAllBalls();
     }

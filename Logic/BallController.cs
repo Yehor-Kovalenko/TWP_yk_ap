@@ -33,12 +33,12 @@ namespace Logic
             repo = DataApi.instantiate();
         }
 
-        public override Ball createBall(int posX, int posY, int speedX, int speedY, int radius)
+        public override void createBall(int posX, int posY, int speedX, int speedY, int radius)
         {
-            return new Ball(posX, posY, speedX, speedY, radius);
+            repo.addBall(new Ball(posX, posY, speedX, speedY, radius));
         }
 
-        public override Ball createBallAtRandomPosition()
+        public override void createBallAtRandomPosition()
         {
             Random r = new();
             int rad = 10;
@@ -46,7 +46,7 @@ namespace Logic
             int pos_Y = r.Next(rad, boardHeight - rad);
             int speed_X = r.Next(-5, 5);
             int speed_Y = r.Next(-5, 5);
-            return new Ball(pos_X, pos_Y, speed_X, speed_Y, rad);
+            repo.addBall(new Ball(pos_X, pos_Y, speed_X, speed_Y, rad));
         }
 
         public override void startAllBalls()
@@ -61,7 +61,10 @@ namespace Logic
         {
             for(int i = 0; i < repo.Balls.Count; i++)
             {
-                repo.Balls[i].BallTimer.Dispose();
+                if (repo.Balls[i].BallTimer is not null)
+                {
+                    repo.Balls[i].BallTimer.Dispose();
+                }
             }
         }
 

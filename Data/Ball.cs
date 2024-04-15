@@ -1,5 +1,6 @@
 ﻿using System;
-using Timer = System.Timers.Timer;
+//using Timer = System.Timers.Timer;
+using System.Threading;
 using System.Numerics;
 
 namespace Data
@@ -12,7 +13,7 @@ namespace Data
         int speedX;
         int speedY;
         int radius;
-        private Timer ballTimer;
+        private Timer? ballTimer;
 
         public int PosX
         {
@@ -44,7 +45,7 @@ namespace Data
             set { radius = value; }
         }
 
-        public Timer BallTimer
+        public Timer? BallTimer
         {
             get => ballTimer;
             set { ballTimer = value; }
@@ -76,18 +77,19 @@ namespace Data
 
         void changeXdirection()
         {
-            speedX *= -1;
+            speedX *= (-1);
         }
 
         void changeYdirection()
         {
-            speedY *= -1;
+            speedY *= (-1);
         }
 
         public void startMovement(int bWidth, int bHeight)
         {
             Vector2 bSize = new Vector2(bWidth, bHeight);
-            BallTimer = new Timer(16.0);
+            BallTimer = new Timer(move, bSize, 0, 16);
+            BallTimer.Elapsed += move(bSize);
             BallTimer.Enabled = true;
             BallTimer.AutoReset = true;
         }
