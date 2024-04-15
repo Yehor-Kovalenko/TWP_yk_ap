@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace ViewModel
 {
-    internal class ViewModelController
+    internal class BoardController
     {
-       
     }
 }

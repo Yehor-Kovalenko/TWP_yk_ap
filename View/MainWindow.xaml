@@ -5,25 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
-        Title="Balls Simulator" FontSize="32" Height="900" Width="1600" WindowStartupLocation="CenterScreen" Background="#FFBBBBBB">
+        Title="Balls Simulator" FontSize="32" 
+        Height="{x:Static SystemParameters.PrimaryScreenHeight}" 
+        Width="{x:Static SystemParameters.PrimaryScreenWidth}"  
+        WindowStartupLocation="CenterScreen" Background="#FFBBBBBB">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Label Content="Welcome to the Balls Simulator" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" Height="74" Width="714" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Candara" FontSize="48" Grid.Column="1"/>
-        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="396" Margin="180,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="505" StrokeThickness="5"/>
-        <Label Content="Simulate" HorizontalAlignment="Left" Margin="234,165,0,0" VerticalAlignment="Top" Height="74" Width="396" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Candara" FontSize="48" Grid.Column="1"/>
-        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="396" Margin="905,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="505" StrokeThickness="5"/>
-        <Label Content="Settings" HorizontalAlignment="Left" Margin="960,165,0,0" VerticalAlignment="Top" Height="74" Width="396" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Candara" FontSize="48" Grid.Column="1"/>
-        <Slider Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="30" Margin="240,418,0,0" VerticalAlignment="Top" Width="384" Foreground="#FF086406" ScrollViewer.HorizontalScrollBarVisibility="Auto" Maximum="15" Minimum="1" SmallChange="1" Cursor="Hand" FontFamily="Candara" FontSize="24" FontWeight="Bold" FontStyle="Italic" AutoToolTipPlacement="BottomRight" TickPlacement="Both" IsSnapToTickEnabled="True">
+        <Label Content="Welcome to the Balls Simulator" HorizontalAlignment="Left" Margin="272,35,0,0" VerticalAlignment="Top" Height="74" Width="714" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Candara" FontSize="48" Grid.Column="1"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="396" Margin="20,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="505" StrokeThickness="5"/>
+        <Label Content="Simulate" HorizontalAlignment="Left" Margin="74,165,0,0" VerticalAlignment="Top" Height="74" Width="396" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Candara" FontSize="48" Grid.Column="1"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="396" Margin="745,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="505" StrokeThickness="5"/>
+        <Label Content="Settings" HorizontalAlignment="Left" Margin="800,165,0,0" VerticalAlignment="Top" Height="74" Width="396" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Candara" FontSize="48" Grid.Column="1"/>
+        <Slider Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="30" Margin="80,0,0,0" VerticalAlignment="Center" Width="384" Foreground="#FF086406" ScrollViewer.HorizontalScrollBarVisibility="Auto" Maximum="15" Minimum="1" SmallChange="1" Cursor="Hand" FontFamily="Candara" FontSize="24" FontWeight="Bold" FontStyle="Italic" AutoToolTipPlacement="BottomRight" TickPlacement="Both" IsSnapToTickEnabled="True">
             <Slider.LayoutTransform>
                 <ScaleTransform ScaleY="1.5"/>
             </Slider.LayoutTransform>
         </Slider>
-        <Label Content="Choose number of balls" HorizontalAlignment="Left" Margin="290,337,0,0" VerticalAlignment="Top" Height="46" Width="284" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Candara" FontSize="22" Grid.Column="1" FontStyle="Italic"/>
-        <Button Content="Simulate" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="78" Margin="324,496,0,0" VerticalAlignment="Top" Width="216" Click="Button_Click" FontFamily="Candara" FontWeight="Bold" Cursor="IBeam"/>
-        <Button Content="Load Simulation" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="78" Margin="1055,391,0,0" VerticalAlignment="Top" Width="245" Click="Button_Click" FontFamily="Candara" FontWeight="Bold" Cursor="IBeam"/>
+        <Label Content="Choose number of balls" HorizontalAlignment="Left" Margin="130,257,0,0" VerticalAlignment="Top" Height="46" Width="284" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Candara" FontSize="22" Grid.Column="1" FontStyle="Italic"/>
+        <Button Content="Simulate" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="78" Margin="164,407,0,0" VerticalAlignment="Top" Width="216" Click="Button_Click" FontFamily="Candara" FontWeight="Bold" Cursor="IBeam"/>
+        <Button Content="Load Simulation" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="78" Margin="876,368,0,0" VerticalAlignment="Top" Width="244" Click="Button_Click" FontFamily="Candara" FontWeight="Bold" Cursor="IBeam"/>
 
     </Grid>
 </Window>
