@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Logic;
 using Data;
 using System.Numerics;
+using System.Threading;
 
 namespace Tests
 {
@@ -34,6 +35,7 @@ namespace Tests
             int pos0x = testBall.PosX;
             int pos0y = testBall.PosY;
             testBall.startMovement((int)bSize[0], (int)bSize[1]);
+            Thread.Sleep(50);
             Assert.IsNotNull(testBall.BallTimer);
             Assert.AreNotEqual(pos0x, testBall.PosX);
             Assert.AreNotEqual(pos0y, testBall.PosY);

@@ -61,18 +61,27 @@ namespace Data
             radius = rad;
         }
 
-        public void move(Vector2 boardSize)
-        {
-            if (posX + speedX >= boardSize[0] - radius || posX + speedX <= radius)
+        public void move(object? obj)
+        { 
+            if (obj == null) throw new ArgumentNullException("object is null");
+            if (obj is Vector2)
             {
-                changeXdirection();
+                Vector2 boardSize = (Vector2)obj;
+                if (posX + speedX >= boardSize[0] - radius || posX + speedX <= radius)
+                {
+                    changeXdirection();
+                }
+                if (posY + speedY >= boardSize[1] - radius || posY + speedY <= radius)
+                {
+                    changeYdirection();
+                }
+                posX += speedX;
+                posY += speedY;
             }
-            if (posY + speedY >= boardSize[1] - radius || posY + speedY <= radius)
+            else
             {
-                changeYdirection();
+                throw new ArgumentException("object is not a vector");
             }
-            posX += speedX;
-            posY += speedY;
         }
 
         void changeXdirection()
@@ -86,14 +95,10 @@ namespace Data
         }
 
         public void startMovement(int bWidth, int bHeight)
-        {
+        { 
             Vector2 bSize = new Vector2(bWidth, bHeight);
             BallTimer = new Timer(move, bSize, 0, 16);
-            BallTimer.Elapsed += move(bSize);
-            BallTimer.Enabled = true;
-            BallTimer.AutoReset = true;
         }
-
     }
 }
 
