@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace ViewModel
 {
-    class MainWindowController : INotifyPropertyChanged
+    public class MainWindowController : INotifyPropertyChanged
     {
         private UserCommand commandGenerate;
         private ModelManager modelManager;
@@ -34,6 +34,7 @@ namespace ViewModel
             CommandStop = new UserCommand(stop, stopStatus);
             CommandResume = new UserCommand(resume, resumeStatus);
             CommandReset = new UserCommand(reset, resetStatus);
+            modelManager = new ModelManager(1400, 700);
             //modelAPi instantiate//
         }
 
@@ -44,7 +45,7 @@ namespace ViewModel
 
         private void generate()
         {
-            this.modelManager.createBalls((int)SliderValue);
+            this.modelManager.createBalls((int)sliderValue);
             NotifyPropertyChanged(nameof(ModelManager));
             this.modelManager.startBallsMovement();
             SwitchStop = true;

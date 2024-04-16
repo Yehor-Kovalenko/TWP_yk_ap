@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace ViewModel
 {
-    internal class UserCommand : ICommand
+    public class UserCommand : ICommand
     {
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;

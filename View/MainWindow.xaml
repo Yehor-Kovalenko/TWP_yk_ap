@@ -3,13 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:View"
         xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
         Title="Ball Simulator" 
         Height="{x:Static SystemParameters.PrimaryScreenHeight}" 
         Width="{x:Static SystemParameters.PrimaryScreenWidth}" 
         Background="#FF0B431B" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:MainWindowController />
+    </Window.DataContext>
     <Grid Margin="0,0,0,-6">
         <Button Content="Reset" Command="{Binding CommandReset}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" Height="52" FontSize="18" Margin="1070,581,0,0"/>
         <Button Content="Stop" Command="{Binding CommandStop}"  Width="122" Height="53" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="863,542,0,0"/>
@@ -21,7 +23,7 @@
         </Slider>
         <Button Content="Simulate" Command="{Binding CommandGenerate}" HorizontalAlignment="Left" Height="78" Margin="402,606,0,0" VerticalAlignment="Top" Width="216" FontFamily="Candara" FontWeight="Bold" Cursor="IBeam" FontSize="22"/>
 
-        <ItemsControl  Margin="45,45,35,181" ItemsSource="{Binding ModelManager.Repo.Balls}">
+        <ItemsControl  Margin="45,45,35,181" ItemsSource="{Binding ModelManager.GetBalls}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas Background="#FF0BAE1B"  />
@@ -29,8 +31,8 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>
                 <Style TargetType="ContentPresenter">
-                    <Setter Property="Canvas.Left" Value="{Binding Position_X}" />
-                    <Setter Property="Canvas.Top" Value="{Binding Position_Y}" />
+                    <Setter Property="Canvas.Left" Value="{Binding PosX}" />
+                    <Setter Property="Canvas.Top" Value="{Binding PosY}" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>

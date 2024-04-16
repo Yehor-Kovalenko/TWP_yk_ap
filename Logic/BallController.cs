@@ -39,7 +39,7 @@ namespace Logic
         public override void createBallAtRandomPosition()
         {
             Random r = new();
-            int rad = 10;
+            int rad = 100;
             int pos_X = r.Next(rad, boardWidth - rad);
             int pos_Y = r.Next(rad, boardHeight - rad);
             int speed_X = r.Next(-5, 5);

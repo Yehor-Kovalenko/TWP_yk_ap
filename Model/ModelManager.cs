@@ -12,6 +12,7 @@ namespace Model
         {
             this.logicAPI = LogicAPI.Instantiate(boardHeight, boardWidth);
         }
+        public List<Ball> GetBalls { get => logicAPI.Repo.Balls; }
         public List<Ball> getAllBalls()
         {
             return logicAPI.Repo.Balls;
