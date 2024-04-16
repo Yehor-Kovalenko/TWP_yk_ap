@@ -49,6 +49,7 @@ namespace ViewModel
 
         private void generate()
         {
+            this.modelAPI.removeAllBals();
             this.modelAPI.createBalls((int)sliderValue);
             NotifyPropertyChanged(nameof(ModelBalls));
             this.modelAPI.startBallsMovement();

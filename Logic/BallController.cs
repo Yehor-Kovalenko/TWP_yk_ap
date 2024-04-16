@@ -40,8 +40,14 @@ namespace Logic
         {
             Random r = new();
             int rad = 40;
-            int pos_X = r.Next(rad, boardWidth - rad);
-            int pos_Y = r.Next(rad, boardHeight - rad);
+            int pos_X;
+            int pos_Y;
+            {
+                pos_X = r.Next(rad, boardWidth - rad);
+            } while (pos_X >= boardWidth - rad && pos_X <= rad) ;
+            {
+                pos_Y = r.Next(rad, boardHeight - rad);
+            } while (pos_Y >= boardHeight - rad && pos_Y <= rad) ;
             int speed_X = r.Next(-5, 5);
             int speed_Y = r.Next(-5, 5);
             repo.addBall(new Ball(pos_X, pos_Y, speed_X, speed_Y, rad));
