@@ -31,8 +31,8 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>
                 <Style TargetType="ContentPresenter">
-                    <Setter Property="Canvas.Left" Value="{Binding Position_X}" />
-                    <Setter Property="Canvas.Top" Value="{Binding Position_Y}" />
+                    <Setter Property="Canvas.Left" Value="{Binding Position_X, Mode=TwoWay}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Position_Y, Mode=TwoWay}" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
@@ -42,6 +42,7 @@
                             <EllipseGeometry
                                 RadiusX="{Binding Radius}"
                                 RadiusY="{Binding Radius}" />
+
                         </Path.Data>
                     </Path>
                     </DataTemplate>
