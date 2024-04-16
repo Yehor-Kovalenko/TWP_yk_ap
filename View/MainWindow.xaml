@@ -4,29 +4,47 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
+        xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
-        Title="Balls Simulator" FontSize="32" 
+        Title="Ball Simulator" 
         Height="{x:Static SystemParameters.PrimaryScreenHeight}" 
-        Width="{x:Static SystemParameters.PrimaryScreenWidth}"  
-        WindowStartupLocation="CenterScreen" Background="#FFBBBBBB">
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Label Content="Welcome to the Balls Simulator" HorizontalAlignment="Left" Margin="272,35,0,0" VerticalAlignment="Top" Height="74" Width="714" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Candara" FontSize="48" Grid.Column="1"/>
-        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="396" Margin="20,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="505" StrokeThickness="5"/>
-        <Label Content="Simulate" HorizontalAlignment="Left" Margin="74,165,0,0" VerticalAlignment="Top" Height="74" Width="396" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Candara" FontSize="48" Grid.Column="1"/>
-        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="396" Margin="745,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="505" StrokeThickness="5"/>
-        <Label Content="Settings" HorizontalAlignment="Left" Margin="800,165,0,0" VerticalAlignment="Top" Height="74" Width="396" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Candara" FontSize="48" Grid.Column="1"/>
-        <Slider Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="30" Margin="80,0,0,0" VerticalAlignment="Center" Width="384" Foreground="#FF086406" ScrollViewer.HorizontalScrollBarVisibility="Auto" Maximum="15" Minimum="1" SmallChange="1" Cursor="Hand" FontFamily="Candara" FontSize="24" FontWeight="Bold" FontStyle="Italic" AutoToolTipPlacement="BottomRight" TickPlacement="Both" IsSnapToTickEnabled="True">
+        Width="{x:Static SystemParameters.PrimaryScreenWidth}" 
+        Background="#FF0B431B" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,0,-6">
+        <Button Content="Reset" Command="{Binding CommandReset}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" Height="52" FontSize="18" Margin="1070,581,0,0"/>
+        <Button Content="Stop" Command="{Binding CommandStop}"  Width="122" Height="53" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="863,542,0,0"/>
+        <Button Content="Resume" Command="{Binding CommandResume}"  Width="122" Height="53" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="863,631,0,0"/>
+        <Slider Value="{Binding SliderValue, Mode=TwoWay}" HorizontalAlignment="Left" Height="30" Margin="318,542,0,0" VerticalAlignment="Top" Width="384" Foreground="#FF086406" ScrollViewer.HorizontalScrollBarVisibility="Auto" Maximum="15" Minimum="1" SmallChange="1" Cursor="Hand" FontFamily="Candara" FontSize="24" FontWeight="Bold" FontStyle="Italic" AutoToolTipPlacement="BottomRight" TickPlacement="Both" IsSnapToTickEnabled="True">
             <Slider.LayoutTransform>
                 <ScaleTransform ScaleY="1.5"/>
             </Slider.LayoutTransform>
         </Slider>
-        <Label Content="Choose number of balls" HorizontalAlignment="Left" Margin="130,257,0,0" VerticalAlignment="Top" Height="46" Width="284" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Candara" FontSize="22" Grid.Column="1" FontStyle="Italic"/>
-        <Button Content="Simulate" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="78" Margin="164,407,0,0" VerticalAlignment="Top" Width="216" Click="Button_Click" FontFamily="Candara" FontWeight="Bold" Cursor="IBeam"/>
-        <Button Content="Load Simulation" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="78" Margin="876,368,0,0" VerticalAlignment="Top" Width="244" Click="Button_Click" FontFamily="Candara" FontWeight="Bold" Cursor="IBeam"/>
+        <Button Content="Simulate" Command="{Binding CommandGenerate}" HorizontalAlignment="Left" Height="78" Margin="402,606,0,0" VerticalAlignment="Top" Width="216" FontFamily="Candara" FontWeight="Bold" Cursor="IBeam" FontSize="22"/>
 
+        <ItemsControl  Margin="45,45,35,181" ItemsSource="{Binding ModelManager.Repo.Balls}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Background="#FF0BAE1B"  />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding Position_X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Position_Y}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Path Fill="#d3c2a6" Stroke="Black" StrokeThickness="1">
+                        <Path.Data>
+                            <EllipseGeometry
+                                RadiusX="{Binding Radius}"
+                                RadiusY="{Binding Radius}" />
+                        </Path.Data>
+                    </Path>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
     </Grid>
 </Window>

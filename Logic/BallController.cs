@@ -1,6 +1,4 @@
 ﻿using Data;
-using System;
-using System.Runtime.Serialization.Formatters;
 
 namespace Logic
 {
