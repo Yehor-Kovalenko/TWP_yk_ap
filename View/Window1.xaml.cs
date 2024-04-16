@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace View
 {
     /// <summary>
-    /// Interaction logic for Board.xaml
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Board : Window
+    public partial class Window1 : Window
     {
-        public Board()
+        public Window1()
         {
             InitializeComponent();
         }
