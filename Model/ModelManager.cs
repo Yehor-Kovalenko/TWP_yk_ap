@@ -4,36 +4,32 @@ using System.Collections.ObjectModel;
 
 namespace Model
 {
-    public class ModelManager
+    public class ModelManager : ModelAPI
     {
         private readonly LogicAPI logicAPI;
+        private ObservableCollection<ModelBall> ModelBalls = new();
 
-        public ModelManager(int boardHeight, int boardWidth)
+        public ModelManager(LogicAPI logicAPI)
         {
-            this.logicAPI = LogicAPI.Instantiate(boardHeight, boardWidth);
-        }
-        public List<Ball> GetBalls { get => logicAPI.Repo.Balls; }
-        public List<Ball> getAllBalls()
-        {
-            return logicAPI.Repo.Balls;
+            this.logicAPI = logicAPI;
         }
 
-        public void removeAllBals()
+        public override void removeAllBals()
         {
             this.logicAPI.removeAllBalls();
         }
 
-        public void startBallsMovement()
+        public override void startBallsMovement()
         {
             this.logicAPI.startAllBalls();
         }
 
-        public void stopBallsMovement()
+        public override void stopBallsMovement()
         {
             this.logicAPI.stopAllBalls();
         }
 
-        public void createBalls(int n)
+        public override void createBalls(int n)
         {
             for (int i = 0; i < n; i++)
             {
@@ -44,6 +40,18 @@ namespace Model
         {
             return 0;
 
+        }
+
+        public override ObservableCollection<ModelBall> ReloadResub()
+        {
+            ModelBalls.Clear();
+            foreach (Ball b in logicAPI.Repo.Balls)
+            {
+                ModelBall modelBall = new ModelBall(b.PosX, b.PosY, b.Radius);
+                ModelBalls.Add(modelBall);
+                b.PropertyChanged += modelBall.Update!;
+            }
+            return ModelBalls;
         }
     }
 }

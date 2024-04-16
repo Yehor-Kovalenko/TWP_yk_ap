@@ -14,16 +14,16 @@
     </Window.DataContext>
     <Grid Margin="0,0,0,-6">
         <Button Content="Reset" Command="{Binding CommandReset}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" Height="52" FontSize="18" Margin="1070,581,0,0"/>
-        <Button Content="Stop" Command="{Binding CommandStop}"  Width="122" Height="53" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="863,542,0,0"/>
+        <Button Content="Stop" IsEnabled="{Binding SwitchStop}" Command="{Binding CommandStop}"  Width="122" Height="53" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="863,542,0,0"/>
         <Button Content="Resume" Command="{Binding CommandResume}"  Width="122" Height="53" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="863,631,0,0"/>
-        <Slider Value="{Binding SliderValue, Mode=TwoWay}" HorizontalAlignment="Left" Height="30" Margin="318,542,0,0" VerticalAlignment="Top" Width="384" Foreground="#FF086406" ScrollViewer.HorizontalScrollBarVisibility="Auto" Maximum="15" Minimum="1" SmallChange="1" Cursor="Hand" FontFamily="Candara" FontSize="24" FontWeight="Bold" FontStyle="Italic" AutoToolTipPlacement="BottomRight" TickPlacement="Both" IsSnapToTickEnabled="True">
+        <Slider Value="{Binding SliderValue, Mode=TwoWay}" HorizontalAlignment="Left" Height="30" Margin="318,542,0,0" VerticalAlignment="Top" Width="384" Foreground="#FF086406" ScrollViewer.HorizontalScrollBarVisibility="Auto" Maximum="15" Minimum="0" SmallChange="1" Cursor="Hand" FontFamily="Candara" FontSize="24" FontWeight="Bold" FontStyle="Italic" AutoToolTipPlacement="BottomRight" TickPlacement="Both" IsSnapToTickEnabled="True">
             <Slider.LayoutTransform>
                 <ScaleTransform ScaleY="1.5"/>
             </Slider.LayoutTransform>
         </Slider>
         <Button Content="Simulate" Command="{Binding CommandGenerate}" HorizontalAlignment="Left" Height="78" Margin="402,606,0,0" VerticalAlignment="Top" Width="216" FontFamily="Candara" FontWeight="Bold" Cursor="IBeam" FontSize="22"/>
 
-        <ItemsControl  Margin="45,45,35,181" ItemsSource="{Binding ModelManager.GetBalls}">
+        <ItemsControl Margin="45,45,35,181" ItemsSource="{Binding ModelBalls}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas Background="#FF0BAE1B"  />
@@ -31,8 +31,8 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>
                 <Style TargetType="ContentPresenter">
-                    <Setter Property="Canvas.Left" Value="{Binding PosX}" />
-                    <Setter Property="Canvas.Top" Value="{Binding PosY}" />
+                    <Setter Property="Canvas.Left" Value="{Binding Position_X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Position_Y}" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
@@ -44,7 +44,7 @@
                                 RadiusY="{Binding Radius}" />
                         </Path.Data>
                     </Path>
-                </DataTemplate>
+                    </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         

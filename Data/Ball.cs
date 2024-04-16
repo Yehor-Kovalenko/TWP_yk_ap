@@ -2,10 +2,12 @@
 //using Timer = System.Timers.Timer;
 using System.Threading;
 using System.Numerics;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Data
 {
-    public class Ball
+    public class Ball : INotifyPropertyChanged
     {
 
         int posX;
@@ -14,6 +16,8 @@ namespace Data
         int speedY;
         int radius;
         private Timer? ballTimer;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public int PosX
         {
@@ -98,6 +102,10 @@ namespace Data
         { 
             Vector2 bSize = new Vector2(bWidth, bHeight);
             BallTimer = new Timer(move, bSize, 0, 16);
+        }
+        private void NotifyPropertyChanged([CallerMemberName] string? propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

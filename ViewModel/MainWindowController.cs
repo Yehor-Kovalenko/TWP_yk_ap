@@ -1,5 +1,6 @@
 ﻿using Logic;
 using Model;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -9,7 +10,7 @@ namespace ViewModel
     public class MainWindowController : INotifyPropertyChanged
     {
         private UserCommand commandGenerate;
-        private ModelManager modelManager;
+        private ModelAPI modelAPI;
         private UserCommand commandStop;
         private UserCommand commandResume;
         private UserCommand commandReset;
@@ -17,15 +18,18 @@ namespace ViewModel
         private double sliderValue;
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        public ObservableCollection<ModelBall> ModelBalls => modelAPI.ReloadResub();
+
 
         public UserCommand CommandGenerate { get => commandGenerate; set => commandGenerate = value; }
         public UserCommand CommandStop { get => commandStop; set => commandStop = value; }
         public UserCommand CommandResume { get => commandResume; set => commandResume = value; }
         public UserCommand CommandReset { get => commandReset; set => commandReset = value; }
         public bool SwitchStop { get => switchStop; set { switchStop = value; NotifyPropertyChanged(); } }    
-        public ModelManager ModelManager { get => modelManager; set => modelManager = value; }
+        public ModelAPI ModelAPI { get => modelAPI; set => modelAPI = value; }
         public double SliderValue { get => sliderValue; set { if (sliderValue != value) { sliderValue = value; NotifyPropertyChanged();  } } }
-
+        
+     
         //collection of balls//
 
         public MainWindowController()
@@ -34,7 +38,7 @@ namespace ViewModel
             CommandStop = new UserCommand(stop, stopStatus);
             CommandResume = new UserCommand(resume, resumeStatus);
             CommandReset = new UserCommand(reset, resetStatus);
-            modelManager = new ModelManager(1400, 700);
+            modelAPI = ModelAPI.Instantiate();
             //modelAPi instantiate//
         }
 
@@ -45,9 +49,9 @@ namespace ViewModel
 
         private void generate()
         {
-            this.modelManager.createBalls((int)sliderValue);
-            NotifyPropertyChanged(nameof(ModelManager));
-            this.modelManager.startBallsMovement();
+            this.modelAPI.createBalls((int)sliderValue);
+            NotifyPropertyChanged(nameof(ModelBalls));
+            this.modelAPI.startBallsMovement();
             SwitchStop = true;
         }
 
@@ -58,8 +62,8 @@ namespace ViewModel
 
         private void stop()
         {
-            ModelManager.stopBallsMovement();
-            NotifyPropertyChanged(nameof(ModelManager));
+            modelAPI.stopBallsMovement();
+            NotifyPropertyChanged(nameof(ModelBalls));
             SwitchStop = !SwitchStop;
         }
         
@@ -70,8 +74,8 @@ namespace ViewModel
 
         private void resume()
         {
-            ModelManager.startBallsMovement();
-            NotifyPropertyChanged(nameof(ModelManager));
+            modelAPI.startBallsMovement();
+            NotifyPropertyChanged(nameof(ModelBalls));
             SwitchStop = !SwitchStop;
         }
 
@@ -82,10 +86,10 @@ namespace ViewModel
 
         private void reset()
         {
-            ModelManager.stopBallsMovement();
+            modelAPI.stopBallsMovement();
             SwitchStop = false;
-            ModelManager.removeAllBals();
-            NotifyPropertyChanged(nameof(ModelManager));
+            modelAPI.removeAllBals();
+            NotifyPropertyChanged(nameof(ModelBalls));
 
 
         }
