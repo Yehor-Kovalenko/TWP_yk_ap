@@ -22,13 +22,13 @@ namespace Data
         public int PosX
         {
             get => posX;
-            set { posX = value; }
+            set { posX = value; NotifyPropertyChanged(nameof(posX)); }
         }
 
         public int PosY
         {
             get => posY;
-            set { posY = value; }
+            set { posY = value; NotifyPropertyChanged(nameof(posY)); }
         }
 
         public int SpeedX
@@ -71,16 +71,18 @@ namespace Data
             if (obj is Vector2)
             {
                 Vector2 boardSize = (Vector2)obj;
-                if (posX + speedX >= boardSize[0] - radius || posX + speedX <= radius)
+                if (PosX + SpeedX >= boardSize[0] - Radius || PosX + SpeedX <= Radius)
                 {
                     changeXdirection();
                 }
-                if (posY + speedY >= boardSize[1] - radius || posY + speedY <= radius)
+                if (PosY + SpeedY >= boardSize[1] - Radius || PosY + SpeedY <= Radius)
                 {
                     changeYdirection();
                 }
-                posX += speedX;
-                posY += speedY;
+                PosX += SpeedX;
+                PosY += SpeedY;
+                NotifyPropertyChanged(nameof(posX));
+                NotifyPropertyChanged(nameof(posY));
             }
             else
             {
@@ -103,7 +105,7 @@ namespace Data
             Vector2 bSize = new Vector2(bWidth, bHeight);
             BallTimer = new Timer(move, bSize, 0, 16);
         }
-        private void NotifyPropertyChanged([CallerMemberName] string? propertyName = "")
+        public void NotifyPropertyChanged([CallerMemberName] string? propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

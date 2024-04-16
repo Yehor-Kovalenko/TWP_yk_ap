@@ -23,8 +23,8 @@ namespace Model
             this.radius = radius;
         }
 
-        public int Position_X { get => position_x; set { position_x = value; NotifyPropertyChanged(); } }
-        public int Position_Y { get => position_y; set { position_y = value; NotifyPropertyChanged(); } }
+        public int Position_X { get => position_x; set { position_x = value; NotifyPropertyChanged(nameof(position_x)); } }
+        public int Position_Y { get => position_y; set { position_y = value; NotifyPropertyChanged(nameof(position_y)); } }
         public int Radius => radius;
         public void Update(Object s, PropertyChangedEventArgs e)
         {
