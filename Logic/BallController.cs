@@ -1,88 +1,123 @@
 ﻿using Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Logic
 {
     public class BallController : LogicAPI
     {
+        public BallIndex Balls { get; set; }
 
-        readonly int boardWidth;
-        readonly int boardHeight;
-        private DataApi repo;
+        public Board BoardSize { get; set; }
 
-        public override int BoardWidth
+        public CancellationTokenSource CancelSimulationSource { get; private set; }
+
+
+
+
+        public BallController(double w, double h)
         {
-            get => boardWidth;
+            BoardSize = new Board(w, h);
+            Balls = new BallIndex();
+            CancelSimulationSource = new CancellationTokenSource();
         }
 
-        public override int BoardHeight
+
+        protected override void changePosition(BallMovement args)
         {
-            get => boardHeight;
+            base.changePosition(args);
         }
 
-        public override DataApi Repo
+
+        public override int getBallsCount()
         {
-            get => repo;
+            return Balls.getBallsCount();
         }
 
-        public BallController(int bWidth, int bHeight)
+
+        public void createBall(double p)
         {
-            boardWidth = bWidth;
-            boardHeight = bHeight;
-            repo = DataApi.instantiate();
+            Random rng = new Random();
+            double x = ((double)rng.NextDouble() * (BoardSize.Width - (2 * p)) + p);
+            double y = ((double)rng.NextDouble() * (BoardSize.Height - (2 * p)) + p);
+            double vx = (rng.NextDouble() - 0.5) * 20;
+            double vy = (rng.NextDouble() - 0.5) * 20;
+            this.Balls.addBall(new Ball(new Vector2((float)x, (float)y), p, new Vector2((float)vx, (float)vy)));
         }
 
-        public override void createBall(int posX, int posY, int speedX, int speedY, int radius)
-        {
-            repo.addBall(new Ball(posX, posY, speedX, speedY, radius));
-        }
 
-        public override void createBallAtRandomPosition()
+
+        public override void addBall(int n)
         {
-            Random r = new();
-            int rad = 40;
-            int pos_X;
-            int pos_Y;
+            Random rng = new Random();
+            for (int i = 0; i < n; i++)
             {
-                pos_X = r.Next(rad, boardWidth - rad);
-            } while (pos_X >= boardWidth - rad && pos_X <= rad) ;
-            {
-                pos_Y = r.Next(rad, boardHeight - rad);
-            } while (pos_Y >= boardHeight - rad && pos_Y <= rad) ;
-            int speed_X = r.Next(-5, 5);
-            int speed_Y = r.Next(-5, 5);
-            repo.addBall(new Ball(pos_X, pos_Y, speed_X, speed_Y, rad));
-        }
 
-        public override void startAllBalls()
-        {
-            for(int i = 0; i < repo.Balls.Count; i++)
-            {
-                repo.Balls[i].startMovement(boardWidth, BoardHeight);
+                double p = (rng.NextDouble() * 20) + 20;
+                double x = (rng.NextDouble() * (BoardSize.Width - (2 * p)) + p);
+                double y = (rng.NextDouble() * (BoardSize.Height - (2 * p)) + p);
+                double vx = (rng.NextDouble() - 0.5) * 20;
+                double vy = (rng.NextDouble() - 0.5) * 20;
+                this.Balls.addBall(new Ball(new Vector2((float)x, (float)y), p, new Vector2((float)vx, (float)vy)));
             }
+
         }
 
-        public override void stopAllBalls()
+
+        public override Ball getBall(int i)
         {
-            for(int i = 0; i < repo.Balls.Count; i++)
+            return Balls.getBall(i);
+        }
+
+
+        public void BallTravel(Ball k)
+        {
+            Vector2 newPosition = k.Position + k.Speed;
+            if (newPosition.X - k.Radius < 0 && newPosition.X + k.Radius > BoardSize.Width)
             {
-                if (repo.Balls[i].BallTimer is not null)
-                {
-                    repo.Balls[i].BallTimer.Dispose();
-                }
+                k.Speed = k.Speed * new Vector2(1, -1);
             }
+
+            if (newPosition.Y - k.Radius < 0 && newPosition.Y + k.Radius > BoardSize.Height)
+            {
+                k.Speed = k.Speed * new Vector2(-1, 1);
+            }
+
+            k.Position = k.Position + k.Speed;
         }
 
-        public override void removeBall(Ball ball)
+
+        public override void Start()
         {
-            repo.removeBall(ball);
+            if (CancelSimulationSource.IsCancellationRequested) return;
+
+            CancelSimulationSource = new CancellationTokenSource();
+
+            for (int i = 0; i < Balls.getBallsCount(); i++)
+            {
+                BallMovement ball = new BallMovement(Balls.getBall(i), i, this, BoardSize.Width, BoardSize.Height);
+                ball.changePosition += (_, args) => changePosition(ball);
+                Task.Factory.StartNew(ball.movement, CancelSimulationSource.Token);
+            }
+
         }
 
-        public override void removeAllBalls()
+
+        public override void Stop()
         {
-            repo.removeAllBalls();
+            this.CancelSimulationSource.Cancel();
         }
 
-        static void Main() { }
+        public void makeBall(double p)
+        {
+            Random random = new Random();
+            double x = ((double)random.NextDouble() * (BoardSize.Width - (2 * p)) + 1 + p);
+            double y = ((double)random.NextDouble() * (BoardSize.Height - (2 * p)) + 1 + p);
+        }
     }
-
 }

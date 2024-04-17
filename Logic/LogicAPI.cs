@@ -1,33 +1,30 @@
-﻿using System;
-using Data;
-
+﻿using Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Logic
 {
     public abstract class LogicAPI
     {
-        public abstract DataApi Repo { get; }
 
-        public abstract int BoardWidth { get; }
+        public event EventHandler<BallMovement>? PositionChangeEvent;
 
-        public abstract int BoardHeight { get; }
+        public abstract Ball getBall(int index);
 
-        public static LogicAPI Instantiate(int bHeight, int bWidth)
+        public abstract void addBall(int liczbaKul);
+
+        public abstract int getBallsCount();
+
+        public abstract void Start();
+
+        public abstract void Stop();
+
+        protected virtual void changePosition(BallMovement k)
         {
-            return new BallController(bHeight, bWidth);
+            PositionChangeEvent?.Invoke(this, k);
         }
-
-        public abstract void createBall(int posX, int posY, int speedX, int speedY, int radius);
-
-        public abstract void removeBall(Ball ball);
-
-        public abstract void removeAllBalls();
-
-        public abstract void stopAllBalls();
-
-        public abstract void createBallAtRandomPosition();
-
-        public abstract void startAllBalls();
     }
 }
- 
