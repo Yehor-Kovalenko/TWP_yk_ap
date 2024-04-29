@@ -7,10 +7,10 @@ namespace TestBalls
     public class UT
     {
         [TestMethod]
-        public void Test1()
+        public void TestBallsCount()
         {
             LogicAPI test = new BallController(50, 50);
-            test.addBall(14);
+            test.addBalls(14);
             Assert.AreEqual(14, test.getBallsCount());
 
         }
@@ -20,7 +20,7 @@ namespace TestBalls
         {
             int iterations = 0;
             LogicAPI test2 = new BallController(70, 70);
-            test2.addBall(11);
+            test2.addBalls(11);
 
             List<Vector2> balls = new List<Vector2>();
             for (int i = 0; i < test2.getBallsCount(); i++)

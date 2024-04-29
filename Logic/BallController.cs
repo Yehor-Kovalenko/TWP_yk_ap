@@ -40,19 +40,19 @@ namespace Logic
         }
 
 
-        public void createBall(double p)
-        {
-            Random rng = new Random();
-            double x = ((double)rng.NextDouble() * (BoardSize.Width - (2 * p)) + p);
-            double y = ((double)rng.NextDouble() * (BoardSize.Height - (2 * p)) + p);
-            double vx = (rng.NextDouble() - 0.5) * 20;
-            double vy = (rng.NextDouble() - 0.5) * 20;
-            this.Balls.addBall(new Ball(new Vector2((float)x, (float)y), p, new Vector2((float)vx, (float)vy)));
-        }
+        //public void createBall(double p)
+        //{
+        //    Random rng = new Random();
+        //    double x = ((double)rng.NextDouble() * (BoardSize.Width - (2 * p)) + p);
+        //    double y = ((double)rng.NextDouble() * (BoardSize.Height - (2 * p)) + p);
+        //    double vx = (rng.NextDouble() - 0.5) * 20;
+        //    double vy = (rng.NextDouble() - 0.5) * 20;
+        //    this.Balls.addBall(new Ball(new Vector2((float)x, (float)y), p, new Vector2((float)vx, (float)vy)));
+        //}
 
 
 
-        public override void addBall(int n)
+        public override void addBalls(int n)
         {
             Random rng = new Random();
             for (int i = 0; i < n; i++)
@@ -75,21 +75,21 @@ namespace Logic
         }
 
 
-        public void BallTravel(Ball k)
-        {
-            Vector2 newPosition = k.Position + k.Speed;
-            if (newPosition.X - k.Radius < 0 && newPosition.X + k.Radius > BoardSize.Width)
-            {
-                k.Speed = k.Speed * new Vector2(1, -1);
-            }
+        //public void BallTravel(Ball k)
+        //{
+        //    Vector2 newPosition = k.Position + k.Speed;
+        //    if (newPosition.X - k.Radius < 0 && newPosition.X + k.Radius > BoardSize.Width)
+        //    {
+        //        k.Speed = k.Speed * new Vector2(1, -1);
+        //    }
 
-            if (newPosition.Y - k.Radius < 0 && newPosition.Y + k.Radius > BoardSize.Height)
-            {
-                k.Speed = k.Speed * new Vector2(-1, 1);
-            }
+        //    if (newPosition.Y - k.Radius < 0 && newPosition.Y + k.Radius > BoardSize.Height)
+        //    {
+        //        k.Speed = k.Speed * new Vector2(-1, 1);
+        //    }
 
-            k.Position = k.Position + k.Speed;
-        }
+        //    k.Position = k.Position + k.Speed;
+        //}
 
 
         public override void Start()
@@ -113,11 +113,11 @@ namespace Logic
             this.CancelSimulationSource.Cancel();
         }
 
-        public void makeBall(double p)
-        {
-            Random random = new Random();
-            double x = ((double)random.NextDouble() * (BoardSize.Width - (2 * p)) + 1 + p);
-            double y = ((double)random.NextDouble() * (BoardSize.Height - (2 * p)) + 1 + p);
-        }
+        //public void makeBall(double p)
+        //{
+        //    Random random = new Random();
+        //    double x = ((double)random.NextDouble() * (BoardSize.Width - (2 * p)) + 1 + p);
+        //    double y = ((double)random.NextDouble() * (BoardSize.Height - (2 * p)) + 1 + p);
+        //}
     }
 }
