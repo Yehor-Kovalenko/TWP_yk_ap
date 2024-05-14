@@ -14,7 +14,7 @@ namespace Logic
 
         public abstract Ball getBall(int index);
 
-        public abstract void addBall(int liczbaKul);
+        public abstract void addBalls(int liczbaKul);
 
         public abstract int getBallsCount();
 

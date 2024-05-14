@@ -32,14 +32,14 @@ namespace Model
             logika = new BallController(SzerokoscPlanszy, WysokoscPlanszy);
             LiczbaKul = 0;
 
-            logika.PositionChangeEvent += (z, k) =>
+            logika.PositionChangeEvent += (o, k) =>
             {
                 ZmianaKoordynatow?.Invoke(this, new OnPositionChangeUiAdapterEventArgs(k.getBall().Position, k.id));
             };
         }
         public void StartProgram()
         {
-            logika.addBall(LiczbaKul);
+            logika.addBalls(LiczbaKul);
             logika.Start();
         }
 
@@ -63,9 +63,9 @@ namespace Model
             return LiczbaKul;
         }
 
-        public void OnBallPositionChange(OnPositionChangeUiAdapterEventArgs args)
-        {
-            ZmianaKoordynatow?.Invoke(this, args);
-        }
+        //public void OnBallPositionChange(OnPositionChangeUiAdapterEventArgs args)
+        //{
+        //    ZmianaKoordynatow?.Invoke(this, args);
+        //}
     }
 }

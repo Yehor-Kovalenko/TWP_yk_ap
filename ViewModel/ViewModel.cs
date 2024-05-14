@@ -13,49 +13,49 @@ namespace ViewModel
 {
     public class CommandSharer : ICommand
     {
-        private readonly Action handler; 
-        private bool isEnabled; 
+        private readonly Action handler;
+        private bool isEnabled;
 
-        public CommandSharer(Action handler) 
+        public CommandSharer(Action handler)
         {
-            this.handler = handler; 
-            IsEnabled = true; 
+            this.handler = handler;
+            IsEnabled = true;
         }
 
-        public bool IsEnabled 
+        public bool IsEnabled
         {
             get { return isEnabled; }
             set
             {
-                if (value != isEnabled) 
+                if (value != isEnabled)
                 {
-                    isEnabled = value; 
-                    if (CanExecuteChanged != null) 
+                    isEnabled = value;
+                    if (CanExecuteChanged != null)
                     {
-                        CanExecuteChanged(this, EventArgs.Empty); 
+                        CanExecuteChanged(this, EventArgs.Empty);
                     }
                 }
             }
         }
 
-        public bool CanExecute(object parameter) 
+        public bool CanExecute(object parameter)
         {
-            return IsEnabled; 
+            return IsEnabled;
         }
 
-        public event EventHandler CanExecuteChanged; 
+        public event EventHandler CanExecuteChanged;
 
-        public void Execute(object parameter)  
+        public void Execute(object parameter)
         {
-            handler();  
+            handler();
         }
     }
 
 
 
-    public class BallInstances : INotifyPropertyChanged    
+    public class BallInstances : INotifyPropertyChanged
     {
-        private Vector2 pos;                               
+        private Vector2 pos;
 
         public int r { get; set; }
 
@@ -106,12 +106,12 @@ namespace ViewModel
         }
     }
 
-    public class ViewModel : INotifyPropertyChanged   
+    public class ViewModel : INotifyPropertyChanged
     {
         private ModelClass model;
         public AsyncObservableCollection<BallInstances> Circles { get; set; }
 
-       
+
 
         public ICommand BeginSceneButton { get; }
         public ICommand StopSceneButton { get; }
@@ -126,16 +126,17 @@ namespace ViewModel
 
         public ViewModel()
         {
-            
+
             Circles = new AsyncObservableCollection<BallInstances>();
 
             model = new ModelClass();
 
-            
+
 
             BeginSceneButton = new CommandSharer(() =>
             {
-                
+                model.StopProgram();
+                Circles.Clear();
                 model.SetLicznikKul((int)SliderValue);
 
                 for (int i = 0; i < (int)SliderValue; i++)
@@ -156,7 +157,7 @@ namespace ViewModel
             {
                 model.StopProgram();
                 Circles.Clear();
-                
+
                 model.SetLicznikKul((int)SliderValue);
             });
         }
@@ -169,7 +170,7 @@ namespace ViewModel
         }
     }
 
-    public class AsyncObservableCollection<T> : ObservableCollection<T>    
+    public class AsyncObservableCollection<T> : ObservableCollection<T>
     {
         private SynchronizationContext _synchronizationContext = SynchronizationContext.Current;
 
@@ -185,42 +186,42 @@ namespace ViewModel
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            
+
             if (SynchronizationContext.Current == _synchronizationContext)
             {
-                
+
                 RaisePropertyChanged(e);
             }
             else
             {
-                
+
                 _synchronizationContext.Send(RaisePropertyChanged, e);
             }
         }
 
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            
+
             if (SynchronizationContext.Current == _synchronizationContext)
             {
-                
+
                 RaiseCollectionChanged(e);
             }
             else
             {
-                
+
                 _synchronizationContext.Send(RaiseCollectionChanged, e);
             }
         }
 
         private void RaisePropertyChanged(object param)
         {
-            
+
             base.OnPropertyChanged((PropertyChangedEventArgs)param);
         }
         private void RaiseCollectionChanged(object param)
         {
-            
+
             base.OnCollectionChanged((NotifyCollectionChangedEventArgs)param);
         }
 
