@@ -1,6 +1,7 @@
 ﻿using Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Logic
 {
     public class BallController : LogicAPI
     {
-        public BallIndex Balls { get; set; }
+        public BallIndex Balls { get; set; } //list of balls
 
         public Board BoardSize { get; set; }
 
@@ -104,6 +105,54 @@ namespace Logic
                 ball.changePosition += (_, args) => changePosition(ball);
                 Task.Factory.StartNew(ball.movement, CancelSimulationSource.Token);
             }
+            Thread collisionManager = new Thread(() =>
+            {
+                CheckForCollision();
+                Thread.Sleep(6);
+            });
+            collisionManager.Start();
+
+        }
+
+        private double BallsDistance(Ball ball1, Ball ball2)
+        {
+            float ball1_x = ball1.Position[0];
+            float ball1_y = ball1.Position[1];
+            float ball2_x = ball2.Position[0];
+            float ball2_y = ball2.Position[1];
+            return Math.Sqrt((ball1_x - ball2_x) * (ball1_x - ball2_x) + (ball1_y - ball2_y) * (ball1_y - ball2_y));
+        }
+
+        private void CheckForCollision()
+        {
+            //for every ball check every other ball
+            for (int i = 0; i < this.Balls.getBallsCount() - 1; ++i)
+            {
+                for (int j = i + 1; j < this.Balls.getBallsCount(); ++j)
+                {
+                    if (this.BallsDistance(getBall(i), getBall(j)) <= getBall(i).Radius + getBall(j).Radius)
+                    {
+                        lock (getBall(i))
+                        {
+                            lock (getBall(j))
+                            {
+                                CollisionLogic(getBall(i), getBall(j));
+                                //check border for collision
+                                //ball2 update ball position
+                            }
+                            //check border for collision
+                            //ball1 update ball position
+                        }
+
+                    }
+
+                }
+            }
+
+        }
+
+        private void CollisionLogic(Ball ball1, Ball ball2)
+        {
 
         }
 

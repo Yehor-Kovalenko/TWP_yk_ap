@@ -57,6 +57,28 @@ namespace Logic
             }
         }
 
+        public async void checkColision()
+        {
+            //for every ball check every other ball
+            for (int i = 0; i < bc.Balls.getBallsCount() - 1; ++i)
+            {
+                for (int j = i + 1; j < bc.Balls.getBallsCount(); ++j)
+                {
+                    if (//logic for coordinate)
+                    {
+                        lock {
+                            lock {
+                                changePosition position;
+                            }
+                            bc.getBall(i);
+                            bc.getBall(j);
+                        }
+
+                    }
+
+                }
+            }
+        }
 
     }
 
