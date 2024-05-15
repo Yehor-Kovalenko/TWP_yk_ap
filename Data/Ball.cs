@@ -18,7 +18,7 @@ namespace Data
         public Ball(Vector2 k, double pr, Vector2 p)
         {
             Position = k;
-            Radius = 25;
+            Radius = 10;
             Speed = p;
             Mass = 10;
         }

@@ -93,7 +93,7 @@ namespace Logic
         //}
 
 
-        public override void Start()
+        public override async void Start()
         {
             if (CancelSimulationSource.IsCancellationRequested) return;
 
@@ -105,13 +105,14 @@ namespace Logic
                 ball.changePosition += (_, args) => changePosition(ball);
                 Task.Factory.StartNew(ball.movement, CancelSimulationSource.Token);
             }
-            Thread collisionManager = new Thread(() =>
+            while (!CancelSimulationSource.IsCancellationRequested)
             {
-                CheckForCollision();
-                Thread.Sleep(6);
-            });
-            collisionManager.Start();
+                await Task.Run(() =>
+                {
+                    CheckForCollision();
+                });
 
+            }
         }
 
         private double BallsDistance(Ball ball1, Ball ball2)
@@ -137,10 +138,10 @@ namespace Logic
                             lock (getBall(j))
                             {
                                 CollisionLogic(getBall(i), getBall(j));
-                                //check border for collision
+                                Move(getBall(j));
                                 //ball2 update ball position
                             }
-                            //check border for collision
+                            Move(getBall(i));
                             //ball1 update ball position
                         }
 
@@ -151,17 +152,42 @@ namespace Logic
 
         }
 
-        private void CollisionLogic(Ball ball1, Ball ball2)
+        private void CollisionLogic(Ball a, Ball b)
         {
-            float Vx1, Vy1, Vx2, Vy2;
+            double Vx1, Vy1, Vx2, Vy2;
 
-            Vx1 = (a.Mass * a.Speed_X + b.Mass * b.Speed_X - b.Mass * (a.Speed_X - b.Speed_X)) / (a.Mass + b.Mass);
-            Vy1 = (a.Mass * a.Speed_Y + b.Mass * b.Speed_Y - b.Mass * (a.Speed_Y - b.Speed_Y)) / (a.Mass + b.Mass);
-            Vx2 = (a.Mass * a.Speed_X + b.Mass * b.Speed_X - a.Mass * (b.Speed_X - a.Speed_X)) / (a.Mass + b.Mass);
-            Vy2 = (a.Mass * a.Speed_Y + b.Mass * b.Speed_Y - a.Mass * (b.Speed_Y - a.Speed_Y)) / (a.Mass + b.Mass);
+            Vx1 = (a.Mass * a.Speed[0] + b.Mass * b.Speed[0] - b.Mass * (a.Speed[0] - b.Speed[0])) / (a.Mass + b.Mass);
+            Vy1 = (a.Mass * a.Speed[1] + b.Mass * b.Speed[1] - b.Mass * (a.Speed[1] - b.Speed[1])) / (a.Mass + b.Mass);
+            Vx2 = (a.Mass * a.Speed[0] + b.Mass * b.Speed[0] - a.Mass * (b.Speed[0] - a.Speed[0])) / (a.Mass + b.Mass);
+            Vy2 = (a.Mass * a.Speed[1] + b.Mass * b.Speed[1] - a.Mass * (b.Speed[1] - a.Speed[1])) / (a.Mass + b.Mass);
+            
+            a.Speed *= new Vector2(-1, 1);
+            a.Speed *= new Vector2(1, -1);
+            Move(a);
+            a.Speed = new Vector2((float)Vx1, (float)Vy1);
+
+            b.Speed *= new Vector2(-1, 1);
+            b.Speed *= new Vector2(1, -1);
+            Move(b);
+            b.Speed = new Vector2((float)Vx2, (float)Vy2);
 
 
+        }
 
+        public void Move(Ball a)
+        {
+            double boardWidth = BoardSize.Width;
+            double boardHeight = BoardSize.Height;
+
+            if (a.Position[0] + a.Speed[0] >= boardWidth - a.Radius || a.Position[0] + a.Speed[0] <= a.Radius)
+            {
+                a.Speed *= new Vector2(-1, 1);
+            }
+            if (a.Position[1] + a.Speed[1] >= boardHeight - a.Radius || a.Position[1] + a.Speed[1] <= a.Radius)
+            {
+                a.Speed *= new Vector2(1, -1);
+            }
+            a.Position += a.Speed;
         }
 
 
