@@ -95,6 +95,7 @@ namespace ViewModel
             X = 0;
             Y = 0;
             r = 20;
+
         }
 
 

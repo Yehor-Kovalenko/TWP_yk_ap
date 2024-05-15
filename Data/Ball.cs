@@ -13,14 +13,15 @@ namespace Data
         public Vector2 Position { get; set; }
         public double Radius { get; set; }
 
-        public double Mass { get; set; }
+        public int Mass { get; set; }
 
         public Ball(Vector2 k, double pr, Vector2 p)
         {
+            Random r = new Random();
             Position = k;
             Radius = 10;
             Speed = p;
-            Mass = 10;
+            Mass = r.Next(1, 10);
         }
     }
 }
