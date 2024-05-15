@@ -13,11 +13,14 @@ namespace Data
         public Vector2 Position { get; set; }
         public double Radius { get; set; }
 
+        public double Mass { get; set; }
+
         public Ball(Vector2 k, double pr, Vector2 p)
         {
             Position = k;
             Radius = 25;
             Speed = p;
+            Mass = 10;
         }
     }
 }

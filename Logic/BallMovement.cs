@@ -43,12 +43,12 @@ namespace Logic
 
                 if (newPosition.X < 0 || newPosition.X + this.ball.Radius > this.Xend)
                 {
-                    this.ball.Speed = this.ball.Speed * new Vector2(-1, 1);
+                    changeXSpeed();
                 }
 
                 if (newPosition.Y < 0 || newPosition.Y + this.ball.Radius > this.Yend)
                 {
-                    this.ball.Speed = this.ball.Speed * new Vector2(1, -1);
+                    changeYSpeed();
                 }
 
                 this.ball.Position = this.ball.Position + this.ball.Speed;
@@ -57,27 +57,14 @@ namespace Logic
             }
         }
 
-        public async void checkColision()
+        public void changeXSpeed()
         {
-            //for every ball check every other ball
-            for (int i = 0; i < bc.Balls.getBallsCount() - 1; ++i)
-            {
-                for (int j = i + 1; j < bc.Balls.getBallsCount(); ++j)
-                {
-                    if (//logic for coordinate)
-                    {
-                        lock {
-                            lock {
-                                changePosition position;
-                            }
-                            bc.getBall(i);
-                            bc.getBall(j);
-                        }
+            this.ball.Speed *= new Vector2(-1, 1);
+        }
 
-                    }
-
-                }
-            }
+        public void changeYSpeed()
+        {
+            this.ball.Speed *= new Vector2(1, -1);
         }
 
     }
