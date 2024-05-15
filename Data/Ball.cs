@@ -9,8 +9,38 @@ namespace Data
 {
     public class Ball
     {
-        public Vector2 Speed { get; set; }
-        public Vector2 Position { get; set; }
+        public Vector2 Speed { 
+            get
+            {
+                lock (this)
+                {
+                    return this.Speed;
+                }
+            } 
+            set
+            {
+                lock (this)
+                {
+                    this.Speed = value;
+                }
+            }
+        }
+        public Vector2 Position { 
+            get
+            {
+                lock (this)
+                {
+                    return this.Position;
+                }
+            }
+            set
+            {
+                lock (this)
+                {
+                    this.Position = value;
+                }
+            }
+        }
         public double Radius { get; set; }
 
         public double Mass { get; set; }
