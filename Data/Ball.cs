@@ -9,8 +9,42 @@ namespace Data
 {
     public class Ball
     {
-        public Vector2 Speed { get; set; }
-        public Vector2 Position { get; set; }
+        private readonly object _lockObject = new object();
+        public Vector2 Speed
+        {
+            get
+            {
+                lock (_lockObject)
+                {
+                    return Speed;
+                }
+            }
+            set
+            {
+                lock (_lockObject)
+                {
+                    Speed = value;
+                }
+            }
+        }
+        public Vector2 Position
+        {
+            get
+            {
+                lock (_lockObject)
+                {
+                    return Position;
+                }
+            }
+            set
+            {
+                lock (_lockObject)
+                {
+                    Position = value;
+                }
+            }
+        }
+
         public double Radius { get; set; }
 
         public int Mass { get; set; }
