@@ -18,8 +18,9 @@ namespace Logic
         public double Yend;
 
         public event EventHandler<BallMovement>? changePosition;
+        private DataLogger _logger;
 
-        
+
         public BallMovement(Ball k, int id, BallController bc, double Xend, double Yend)
         {
             this.ball = k;
@@ -27,6 +28,7 @@ namespace Logic
             this.bc = bc;
             this.Xend = Xend;
             this.Yend = Yend;
+            _logger = DataLogger.Instance;
         }
 
         public Ball getBall()
@@ -59,12 +61,17 @@ namespace Logic
 
         public void changeXSpeed()
         {
+            _logger.Log(ball.Position, ball.Speed, ball.Radius);
             this.ball.Speed *= new Vector2(-1, 1);
+            _logger.Log(ball.Position, ball.Speed, ball.Radius);
+
         }
 
         public void changeYSpeed()
         {
+            _logger.Log(ball.Position, ball.Speed, ball.Radius);
             this.ball.Speed *= new Vector2(1, -1);
+            _logger.Log(ball.Position, ball.Speed, ball.Radius);
         }
 
     }

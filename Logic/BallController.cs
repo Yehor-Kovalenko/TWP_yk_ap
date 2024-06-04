@@ -17,6 +17,7 @@ namespace Logic
         public Board BoardSize { get; set; }
 
         public CancellationTokenSource CancelSimulationSource { get; private set; }
+        private DataLogger _logger;
 
 
 
@@ -26,6 +27,7 @@ namespace Logic
             BoardSize = new Board(w, h);
             Balls = new BallIndex();
             CancelSimulationSource = new CancellationTokenSource();
+            _logger = DataLogger.Instance;
         }
 
 
@@ -181,11 +183,15 @@ namespace Logic
 
             if (a.Position[0] + a.Speed[0] >= boardWidth - a.Radius || a.Position[0] + a.Speed[0] <= a.Radius)
             {
+                _logger.Log(a.Position, a.Speed, a.Radius);
                 a.Speed *= new Vector2(-1, 1);
+                _logger.Log(a.Position, a.Speed, a.Radius);
             }
             if (a.Position[1] + a.Speed[1] >= boardHeight - a.Radius || a.Position[1] + a.Speed[1] <= a.Radius)
             {
+                _logger.Log(a.Position, a.Speed, a.Radius);
                 a.Speed *= new Vector2(1, -1);
+                _logger.Log(a.Position, a.Speed, a.Radius);
             }
             a.Position += a.Speed;
         }
