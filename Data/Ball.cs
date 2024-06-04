@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Data
 {
@@ -22,6 +23,7 @@ namespace Data
             Radius = 10;
             Speed = p;
             Mass = r.Next(1, 10);
+            Debug.WriteLine($"Kula zostala utworzona");
         }
     }
 }
