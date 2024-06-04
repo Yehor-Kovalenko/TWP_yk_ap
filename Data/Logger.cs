@@ -14,7 +14,7 @@ namespace Data
 {
     public class DataLogger
     {
-        private static readonly Lazy<DataLogger> _instance = new Lazy<DataLogger>(() => new DataLogger("logFile.json"));
+        private static readonly Lazy<DataLogger> _instance = new Lazy<DataLogger>(() => new DataLogger("../../../../Data/logFile.json"));
         private ConcurrentQueue<BallLogEntry> _logQueue; //Bufor
         private string _logFilePath;
         private Thread _logThread;
