@@ -68,7 +68,7 @@ namespace Logic
                 double vy = (rng.NextDouble() - 0.5) * 20;
                 this.Balls.addBall(new Ball(new Vector2((float)x, (float)y), p, new Vector2((float)vx, (float)vy)));
             }
-
+            Debug.WriteLine($"Utworzono {n} kul");
         }
 
 
@@ -100,7 +100,6 @@ namespace Logic
             if (CancelSimulationSource.IsCancellationRequested) return;
 
             CancelSimulationSource = new CancellationTokenSource();
-
             for (int i = 0; i < Balls.getBallsCount(); i++)
             {
                 BallMovement ball = new BallMovement(Balls.getBall(i), i, this, BoardSize.Width, BoardSize.Height);
@@ -139,6 +138,7 @@ namespace Logic
                         {
                             lock (getBall(j))
                             {
+                                Debug.WriteLine($"Kolizja wykryta");
                                 CollisionLogic(getBall(i), getBall(j));
                                 Move(getBall(j));
                                 //ball2 update ball position

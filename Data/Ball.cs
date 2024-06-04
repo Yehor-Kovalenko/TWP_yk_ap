@@ -1,50 +1,17 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Data
 {
     public class Ball
     {
-        private readonly object _lockObject = new object();
-        public Vector2 Speed
-        {
-            get
-            {
-                lock (_lockObject)
-                {
-                    return Speed;
-                }
-            }
-            set
-            {
-                lock (_lockObject)
-                {
-                    Speed = value;
-                }
-            }
-        }
-        public Vector2 Position
-        {
-            get
-            {
-                lock (_lockObject)
-                {
-                    return Position;
-                }
-            }
-            set
-            {
-                lock (_lockObject)
-                {
-                    Position = value;
-                }
-            }
-        }
-
+        public Vector2 Speed { get; set; }
+        public Vector2 Position { get; set; }
         public double Radius { get; set; }
 
         public int Mass { get; set; }
@@ -56,6 +23,7 @@ namespace Data
             Radius = 10;
             Speed = p;
             Mass = r.Next(1, 10);
+            Debug.WriteLine($"Kula zostala utworzona");
         }
     }
 }

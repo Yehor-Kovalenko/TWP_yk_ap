@@ -1,6 +1,7 @@
 ﻿using Logic;
 using System;
 using System.Numerics;
+using System.Diagnostics;
 
 namespace Model
 {
@@ -39,12 +40,14 @@ namespace Model
         }
         public void StartProgram()
         {
+            Debug.WriteLine($"Symulacja uruchomiona");
             logika.addBalls(LiczbaKul);
             logika.Start();
         }
 
         public void StopProgram()
         {
+            Debug.WriteLine($"Symulacja zatrzymana");
             logika.Stop();
             logika = new BallController(SzerokoscPlanszy, WysokoscPlanszy);
             logika.PositionChangeEvent += (z, k) =>
