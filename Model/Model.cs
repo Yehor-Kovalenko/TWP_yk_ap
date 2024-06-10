@@ -65,10 +65,5 @@ namespace Model
         {
             return LiczbaKul;
         }
-
-        //public void OnBallPositionChange(OnPositionChangeUiAdapterEventArgs args)
-        //{
-        //    ZmianaKoordynatow?.Invoke(this, args);
-        //}
     }
 }
