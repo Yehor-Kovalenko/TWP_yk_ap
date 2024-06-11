@@ -7,6 +7,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Logic
 {
@@ -18,6 +19,7 @@ namespace Logic
 
         public CancellationTokenSource CancelSimulationSource { get; private set; }
         private DataLogger _logger;
+        private System.Timers.Timer _timer;
 
 
 
@@ -27,7 +29,27 @@ namespace Logic
             BoardSize = new Board(w, h);
             Balls = new BallIndex();
             CancelSimulationSource = new CancellationTokenSource();
-            _logger = DataLogger.Instance;
+            this._timer = new System.Timers.Timer(10000);
+            _timer.Elapsed += OnTimedEvent;
+            _timer.AutoReset = true;
+            _timer.Enabled = true;
+        }
+
+        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                Ball logBall = this.Balls.getBall(0);
+                for (int i = 0; i < this.Balls.getBallsCount(); i++)
+                {
+                    logBall = this.Balls.getBall(i);
+                    DataLogger.Instance.Log(logBall.Position, logBall.Speed, logBall.Radius);
+                }
+            } catch (Exception ex)
+            {
+                Debug.WriteLine("EXCEPTION: " + ex.Message);
+            }
+            
         }
 
 
@@ -41,17 +63,6 @@ namespace Logic
         {
             return Balls.getBallsCount();
         }
-
-
-        //public void createBall(double p)
-        //{
-        //    Random rng = new Random();
-        //    double x = ((double)rng.NextDouble() * (BoardSize.Width - (2 * p)) + p);
-        //    double y = ((double)rng.NextDouble() * (BoardSize.Height - (2 * p)) + p);
-        //    double vx = (rng.NextDouble() - 0.5) * 20;
-        //    double vy = (rng.NextDouble() - 0.5) * 20;
-        //    this.Balls.addBall(new Ball(new Vector2((float)x, (float)y), p, new Vector2((float)vx, (float)vy)));
-        //}
 
 
 
@@ -76,23 +87,6 @@ namespace Logic
         {
             return Balls.getBall(i);
         }
-
-
-        //public void BallTravel(Ball k)
-        //{
-        //    Vector2 newPosition = k.Position + k.Speed;
-        //    if (newPosition.X - k.Radius < 0 && newPosition.X + k.Radius > BoardSize.Width)
-        //    {
-        //        k.Speed = k.Speed * new Vector2(1, -1);
-        //    }
-
-        //    if (newPosition.Y - k.Radius < 0 && newPosition.Y + k.Radius > BoardSize.Height)
-        //    {
-        //        k.Speed = k.Speed * new Vector2(-1, 1);
-        //    }
-
-        //    k.Position = k.Position + k.Speed;
-        //}
 
 
         public override async void Start()
@@ -183,15 +177,15 @@ namespace Logic
 
             if (a.Position[0] + a.Speed[0] >= boardWidth - a.Radius || a.Position[0] + a.Speed[0] <= a.Radius)
             {
-                _logger.Log(a.Position, a.Speed, a.Radius);
+                //_logger.Log(a.Position, a.Speed, a.Radius);
                 a.Speed *= new Vector2(-1, 1);
-                _logger.Log(a.Position, a.Speed, a.Radius);
+                //_logger.Log(a.Position, a.Speed, a.Radius);
             }
             if (a.Position[1] + a.Speed[1] >= boardHeight - a.Radius || a.Position[1] + a.Speed[1] <= a.Radius)
             {
-                _logger.Log(a.Position, a.Speed, a.Radius);
+                //_logger.Log(a.Position, a.Speed, a.Radius);
                 a.Speed *= new Vector2(1, -1);
-                _logger.Log(a.Position, a.Speed, a.Radius);
+                //_logger.Log(a.Position, a.Speed, a.Radius);
             }
             a.Position += a.Speed;
         }
@@ -201,12 +195,5 @@ namespace Logic
         {
             this.CancelSimulationSource.Cancel();
         }
-
-        //public void makeBall(double p)
-        //{
-        //    Random random = new Random();
-        //    double x = ((double)random.NextDouble() * (BoardSize.Width - (2 * p)) + 1 + p);
-        //    double y = ((double)random.NextDouble() * (BoardSize.Height - (2 * p)) + 1 + p);
-        //}
     }
 }

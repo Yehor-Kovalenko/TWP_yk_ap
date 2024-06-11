@@ -61,17 +61,17 @@ namespace Logic
 
         public void changeXSpeed()
         {
-            _logger.Log(ball.Position, ball.Speed, ball.Radius);
+            //_logger.Log(ball.Position, ball.Speed, ball.Radius);
             this.ball.Speed *= new Vector2(-1, 1);
-            _logger.Log(ball.Position, ball.Speed, ball.Radius);
+            //_logger.Log(ball.Position, ball.Speed, ball.Radius);
 
         }
 
         public void changeYSpeed()
         {
-            _logger.Log(ball.Position, ball.Speed, ball.Radius);
+            //_logger.Log(ball.Position, ball.Speed, ball.Radius);
             this.ball.Speed *= new Vector2(1, -1);
-            _logger.Log(ball.Position, ball.Speed, ball.Radius);
+            //_logger.Log(ball.Position, ball.Speed, ball.Radius);
         }
 
     }
