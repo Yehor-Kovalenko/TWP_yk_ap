@@ -92,13 +92,15 @@ namespace Logic
         public override async void Start()
         {
             if (CancelSimulationSource.IsCancellationRequested) return;
+            List<Task> tasks = new List<Task>();
 
             CancelSimulationSource = new CancellationTokenSource();
             for (int i = 0; i < Balls.getBallsCount(); i++)
             {
                 BallMovement ball = new BallMovement(Balls.getBall(i), i, this, BoardSize.Width, BoardSize.Height);
                 ball.changePosition += (_, args) => changePosition(ball);
-                Task.Factory.StartNew(ball.movement, CancelSimulationSource.Token);
+                var task = Task.Factory.StartNew(ball.movement, CancelSimulationSource.Token);
+                tasks.Add(task);
             }
             while (!CancelSimulationSource.IsCancellationRequested)
             {
@@ -108,6 +110,7 @@ namespace Logic
                 });
 
             }
+            await Task.WhenAll(tasks);
         }
 
         private double BallsDistance(Ball ball1, Ball ball2)
@@ -194,6 +197,12 @@ namespace Logic
         public override void Stop()
         {
             this.CancelSimulationSource.Cancel();
+            if (_timer != null)
+            {
+                _timer.Stop();
+                _timer.Dispose();
+                _timer = null;
+            }
         }
     }
 }
