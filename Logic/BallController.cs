@@ -45,7 +45,8 @@ namespace Logic
                     logBall = this.Balls.getBall(i);
                     DataLogger.Instance.Log(logBall.Position, logBall.Speed, logBall.Radius);
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Debug.WriteLine("EXCEPTION: " + ex.Message);
             }
@@ -194,6 +195,12 @@ namespace Logic
         public override void Stop()
         {
             this.CancelSimulationSource.Cancel();
+            if (_timer != null)
+            {
+                _timer.Stop();
+                _timer.Dispose();
+                _timer = null;
+            }
         }
     }
 }
